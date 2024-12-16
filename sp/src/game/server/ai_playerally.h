@@ -387,6 +387,9 @@ public:
 #ifdef EZ2
 	// Used by Wilson camera targets
 	virtual const Vector &GetSpeechTargetSearchOrigin() { return GetAbsOrigin(); }
+	virtual const Vector GetEyePositionForSpeech( CBaseEntity *pSpeechTarget ) { return EyePosition(); }
+	virtual const Vector &GetWorldSpaceCenterForSpeech( CBaseEntity *pSpeechTarget ) { return WorldSpaceCenter(); }
+	virtual const Vector &GetAbsOriginForSpeech( CBaseEntity *pSpeechTarget ) { return GetAbsOrigin(); }
 #endif
 	
 	CBaseEntity *GetSpeechTarget()								{ return m_hTalkTarget.Get(); }
