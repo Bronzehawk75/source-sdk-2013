@@ -2300,8 +2300,11 @@ bool CNPC_Wilson::HeadTargetPosOverride( const Vector &vecTargetPos, Vector &vec
 		return BaseClass::HeadTargetPosOverride( vecTargetPos, vecDir, flDist );
 
 	// Translate this target position from the camera to Wilson's actual entity
-	matrix3x4_t matWorldToTarget, matCameraToTarget, matTargetToCamera;
-	AngleIMatrix( QAngle(), vecTargetPos, matWorldToTarget );
+	matrix3x4_t matCameraToTarget, matTargetToCamera;
+	matrix3x4_t matWorldToTarget(
+		1.0f, 0.0f, 0.0f, -vecTargetPos.x,
+		0.0f, 1.0f, 0.0f, -vecTargetPos.y,
+		0.0f, 0.0f, 1.0f, -vecTargetPos.z );
 	ConcatTransforms( matWorldToTarget, pNearestCamera->EntityToWorldTransform(), matCameraToTarget );
 	MatrixInvert( matCameraToTarget, matTargetToCamera );
 
@@ -2312,8 +2315,7 @@ bool CNPC_Wilson::HeadTargetPosOverride( const Vector &vecTargetPos, Vector &vec
 	ConcatTransforms( matWilson, matTargetToCamera, matTargetToWilson );
 
 	Vector vecOrigin;
-	QAngle angAngles;
-	MatrixAngles( matTargetToWilson, angAngles, vecOrigin );
+	MatrixGetColumn( matTargetToWilson, 3, vecOrigin );
 
 	vecDir = vecOrigin - EyePosition();
 	flDist = VectorNormalize( vecDir );
