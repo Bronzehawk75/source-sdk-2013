@@ -481,9 +481,17 @@ void CAI_PlayerAlly::GatherConditions( void )
 	{
 				
 		bool bPlayerIsLooking = false;
+#ifdef EZ2
+		if ( ( pLocalPlayer->GetAbsOrigin() - GetAbsOriginForSpeech( pLocalPlayer ) ).Length2DSqr() < Square(TALKER_STARE_DIST) )
+#else
 		if ( ( pLocalPlayer->GetAbsOrigin() - GetAbsOrigin() ).Length2DSqr() < Square(TALKER_STARE_DIST) )
+#endif
 		{
+#ifdef EZ2
+			if ( pLocalPlayer->FInViewCone( GetEyePositionForSpeech( pLocalPlayer ) ) )
+#else
 			if ( pLocalPlayer->FInViewCone( EyePosition() ) )
+#endif
 			{
 				if ( pLocalPlayer->GetSmoothedVelocity().LengthSqr() < Square( 100 ) )
 					bPlayerIsLooking = true;
@@ -784,7 +792,7 @@ bool CAI_PlayerAlly::SelectAlertSpeech( AISpeechSelection_t *pSelection )
 	// NPCs can comment on smells in EZ2
 	if ( pSmellTarget && HasCondition( COND_SMELL ) && GetBestScent() && GetExpresser() && GetExpresser()->CanSpeakConcept( TLK_SMELL ) )
 	{
-		if( SelectSpeechResponse( TLK_SMELL, UTIL_VarArgs("distancetosmell:%f", GetAbsOrigin().DistTo( GetBestScent()->GetSoundReactOrigin() ) ), pSmellTarget, pSelection ) )
+		if( SelectSpeechResponse( TLK_SMELL, UTIL_VarArgs("distancetosmell:%f", GetAbsOriginForSpeech( pSmellTarget ).DistTo( GetBestScent()->GetSoundReactOrigin() ) ), pSmellTarget, pSelection ) )
 			return true;
 	}
 #endif
@@ -1408,7 +1416,11 @@ void CAI_PlayerAlly::OnEnemyRangeAttackedMe( CBaseEntity *pEnemy, const Vector &
 		AI_CriteriaSet modifiers;
 		ModifyOrAppendEnemyCriteria( modifiers, pEnemy );
 
+#ifdef EZ2
+		Vector vecEntDir = (pEnemy->EyePosition() - GetEyePositionForSpeech(pEnemy));
+#else
 		Vector vecEntDir = (pEnemy->EyePosition() - EyePosition());
+#endif
 		float flDot = DotProduct( vecEntDir.Normalized(), vecDir );
 		modifiers.AppendCriteria( "shot_dot", CNumStr( flDot ) );
 
