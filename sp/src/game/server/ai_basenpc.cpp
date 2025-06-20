@@ -12546,9 +12546,9 @@ BEGIN_DATADESC( CAI_BaseNPC )
 #endif
 
 	// Change jump height
-	DEFINE_INPUTFUNC(FIELD_FLOAT, "SetMaxJumpUp", InputSetJumpUp),
-	DEFINE_INPUTFUNC(FIELD_FLOAT, "SetMaxJumpDown", InputSetJumpDown),
-	DEFINE_INPUTFUNC(FIELD_FLOAT, "SetMaxJumpDist", InputSetJumpDist),
+	DEFINE_INPUTFUNC( FIELD_FLOAT, "SetMaxJumpUp", InputSetJumpUp ),
+	DEFINE_INPUTFUNC( FIELD_FLOAT, "SetMaxJumpDown", InputSetJumpDown ),
+	DEFINE_INPUTFUNC( FIELD_FLOAT, "SetMaxJumpDist", InputSetJumpDist ),
 
 	// Function pointers
 	DEFINE_USEFUNC( NPCUse ),
@@ -17062,17 +17062,17 @@ bool CAI_BaseNPC::IsInChoreo() const
 //-----------------------------------------------------------------------------
 // Purpose: Override the NPC's default jump values
 //-----------------------------------------------------------------------------
-void CAI_BaseNPC::InputSetJumpUp(inputdata_t& inputdata)
+void CAI_BaseNPC::InputSetJumpUp( inputdata_t& inputdata )
 {
 	m_jumpUpOverride = inputdata.value.Float();
 }
 
-void CAI_BaseNPC::InputSetJumpDown(inputdata_t& inputdata)
+void CAI_BaseNPC::InputSetJumpDown( inputdata_t& inputdata )
 {
 	m_jumpDownOverride = inputdata.value.Float();
 }
 
-void CAI_BaseNPC::InputSetJumpDist(inputdata_t& inputdata)
+void CAI_BaseNPC::InputSetJumpDist( inputdata_t& inputdata )
 {
 	m_jumpDistOverride = inputdata.value.Float();
 }

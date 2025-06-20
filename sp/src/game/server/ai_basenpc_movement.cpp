@@ -302,16 +302,16 @@ bool CAI_BaseNPC::IsJumpLegal( const Vector &startPos, const Vector &apex, const
 	float localMaxDown = m_jumpDownOverride > 0.0 ? m_jumpDownOverride : maxDown;
 	float localMaxDist = m_jumpDistOverride > 0.0 ? m_jumpDistOverride : maxDist;
 
-	if ((endPos.z - startPos.z) > localMaxUp + 0.1)
+	if ((endPos.z - startPos.z) > localMaxUp + 0.1 )
 		return false;
-	if ((startPos.z - endPos.z) > localMaxDown + 0.1)
+	if ((startPos.z - endPos.z) > localMaxDown + 0.1 )
 		return false;
 
-	if ((apex.z - startPos.z) > localMaxUp * 1.25)
+	if ((apex.z - startPos.z) > localMaxUp * 1.25 )
 		return false;
 
 	float dist = (startPos - endPos).Length();
-	if (dist > localMaxDist + 0.1)
+	if ( dist > localMaxDist + 0.1 )
 		return false;
 	return true;
 }
